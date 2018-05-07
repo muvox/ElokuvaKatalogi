@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/add-movie")
+@WebServlet("/addMovie")
 public class AddMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,7 +22,7 @@ public class AddMovieServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.print("Vittu ku ei toimi");
-		String jsp = "/view/movieList.jsp";
+		String jsp = "/view/movielist.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);	
 		}
