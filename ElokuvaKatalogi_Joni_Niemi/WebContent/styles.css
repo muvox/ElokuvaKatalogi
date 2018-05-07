@@ -1,0 +1,7 @@
+.moviecard{
+	max-width: 250px;
+	background-color: gray;
+}
+.container{
+    display: inline-block;
+}
