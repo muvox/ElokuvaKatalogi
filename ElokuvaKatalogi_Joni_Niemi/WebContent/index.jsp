@@ -10,6 +10,8 @@
 </head>
 <body>
 T‰m‰ sovellus tulee n‰ytt‰m‰‰n listan elokuvista. 
+<a href="listMovies">List Movies</a>
+<a href="addMovie">Add Movie</a>
 
 </body>
 </html>

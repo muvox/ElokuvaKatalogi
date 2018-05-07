@@ -9,11 +9,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="add-movie">Add new Movie</a>
-<div class="cointainer" style="display:flex;flex-direction:row;">
+<a href="addMovie">Add new Movie</a>
+//<div class="cointainer" style="display:flex;flex-direction:row;">
 	<c:forEach items="${movies}" var="movie">
 	
-		<div class="moviecard">
+		<div class="card">
+			<div class="wrapper" style="backgroiund: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 55%, black), url(${movie.image}) center/cover no-repeat;">
+				<div class="top">
+					<div class="date">
+					</div>				
+					
+				
+				</div>
+		</div>
+		
+		<div class="data-section">
+			<div class="content">
+				<div class="heading"><:out value="${movie.title}"/></div>
+				<div class="data"><c:out value="${movie.desc}"/></div>
+			</div>
+		
+		
+		<!-- </div>
+		
   			<img src="${movie.image }" alt="Poster" style="width:100%">
   				<div class="cont">
     				<h4><c:out value="${movie.title}" /></h4> 
@@ -22,7 +40,7 @@
     				<p>Käyttäjäarvosana: <c:out value="${movie.userRating}"/><p>
  				 </div>
 		</div>
-		
+		-->
 		
 	</c:forEach>
 	</div>

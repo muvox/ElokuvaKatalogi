@@ -56,4 +56,27 @@ public class MovieDAO extends DataAccessObject{
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void addNew(Movie movie) {
+		Connection connection = null;
+		PreparedStatement stmtInsert = null;
+		
+		try {
+		connection = getConnection();
+		
+		String sqlInsert = "INSERT INTO movie(title, description, runtime, image, userRating) VALUES (?,?,?,?,?)";
+		stmtInsert = connection.prepareStatement(sqlInsert);
+		stmtInsert.setString(1, movie.getTitle());
+		stmtInsert.setString(2, movie.getDesc());
+		stmtInsert.setString(3, movie.getRuntime());
+		stmtInsert.setString(4, movie.getImage());
+		stmtInsert.setFloat(5, movie.getUserRating());
+		stmtInsert.executeUpdate();
+		
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}finally {
+			close(stmtInsert, connection);
+		}
+	}
 }
