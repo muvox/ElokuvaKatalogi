@@ -43,7 +43,7 @@ public class ListMoviesServlet extends HttpServlet {
 		*/
 		request.setAttribute("movies", movies);
 		
-		String jsp = "/view/movielist.jsp";
+		String jsp = "/view/movieList.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);
 	}
