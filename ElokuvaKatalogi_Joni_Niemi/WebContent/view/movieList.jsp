@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="addMovie">Add new Movie</a>
+<a href="add-movie">Add new Movie</a>
 <div class="cointainer" style="display:flex;flex-direction:row;">
 	<c:forEach items="${movies}" var="movie">
 	
