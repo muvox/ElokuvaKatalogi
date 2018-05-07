@@ -6,12 +6,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #fafafa;
-  font-family: "Roboto";
-  height: 100vh;
-}
-
 a {
   text-decoration: none;
 }
@@ -312,16 +306,4 @@ a {
 .card .button:active.button {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-}
-
-.description {
-  padding: 1em;
-  color: black;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-}
-.description a {
-  font-size: 2em;
-  color: #0177B5;
 }
