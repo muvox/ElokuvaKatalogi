@@ -93,6 +93,15 @@ public class Movie {
 		this.userRating = userRating;
 	}
 	
+	public Movie(String title, String desc, String runtime,
+			String image, float userRating) {
+		super();
+		this.title = title;
+		this.desc = desc;
+		this.runtime = runtime;
+		this.image = image;
+		this.userRating = userRating;
+	}
 	
 	
 }
