@@ -1,4 +1,4 @@
-package elokuvat.model.dao;
+package movie.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +19,7 @@ public class DataAccessObject {
 		String username = "a1704471";  
 		// dbk�ytt�j�tunnuksesi on t�ss� a-alkuinen opiskelijanumerosi 
 		
-		String password = "tiDI1P83z";
+		String password = "xxx";
 		String url = "jdbc:mysql://localhost:3306/a1704471";
 		// tietokantasi nimi on t�ss� a-alkuinen opiskelijanumerosi
 

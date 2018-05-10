@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import elokuvat.model.dao.MovieDAO;
 import model.Movie;
+import movie.model.dao.MovieDAO;
 
 
 @WebServlet("/listMovies")
@@ -25,7 +25,7 @@ public class ListMoviesServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//id, title, desc, runtime, image, floatRating
+		//id, title, description, runtime, image, userRating
 		
 		//ArrayList<Movie> movies = new ArrayList<Movie>();
 		

@@ -282,6 +282,18 @@ a {
   font-weight: 700;
   transition: all 0.3s;
 }
+
+.card .edit {
+    display: block;
+    float: right;
+    opacity: 0;
+    color: white;
+}
+
+.card .wrapper:hover .edit{
+    opacity: 1;
+}
+
 .card .button::after {
   font-family: FontAwesome;
   content: "\f0da";

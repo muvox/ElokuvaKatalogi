@@ -1,4 +1,4 @@
-package elokuvat.model.dao;
+package movie.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,6 +57,39 @@ public class MovieDAO extends DataAccessObject{
 		}
 	}
 	
+	public Movie findMovieById(int id) {
+		ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		Movie movie = null; 
+		try {
+			// Luodaan yhteys
+			conn = getConnection();
+			
+			// Luodaan lause joka hakee kaikki id:llä (ID rivi taulussa kaikilla uniikki, voi antaa vain yhden tuloksen
+			String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie WHERE id=?;";
+			
+			stmt = conn.prepareStatement(sqlSelect);
+			
+			System.out.println("Queryyn menevän elokuvan ID:"+id); //testi
+			
+			stmt.setInt(1, id);
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				movie = readMovie(rs);
+			}
+	
+
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}finally {
+			close(rs, stmt, conn); // Suljetaan
+		}
+		
+		return movie;
+	}
+	
 	public void addNew(Movie movie) {
 		Connection connection = null;
 		PreparedStatement stmtInsert = null;
@@ -67,7 +100,7 @@ public class MovieDAO extends DataAccessObject{
 		String sqlInsert = "INSERT INTO movie(title, description, runtime, image, userRating) VALUES (?,?,?,?,?)";
 		stmtInsert = connection.prepareStatement(sqlInsert);
 		stmtInsert.setString(1, movie.getTitle());
-		stmtInsert.setString(2, movie.getDesc());
+		stmtInsert.setString(2, movie.getDescription());
 		stmtInsert.setString(3, movie.getRuntime());
 		stmtInsert.setString(4, movie.getImage());
 		stmtInsert.setFloat(5, movie.getUserRating());
@@ -77,6 +110,42 @@ public class MovieDAO extends DataAccessObject{
 			throw new RuntimeException(e);
 		}finally {
 			close(stmtInsert, connection);
+		}
+	}
+	
+	public void updateMovie(Movie movieBefore, Movie updatedMovie) {
+		Connection connection = null;
+		PreparedStatement stmtInsert = null;
+		
+	
+		try {
+			connection = getConnection();
+			
+			String sqlUpdate = "UPDATE movie "
+							+"SET title=?, description=?, runtime=?, image=?, userRating=? "
+							+"WHERE id=?";
+			stmtInsert = connection.prepareStatement(sqlUpdate);
+			stmtInsert.setString(1, updatedMovie.getTitle());
+			stmtInsert.setString(2, updatedMovie.getDescription());
+			stmtInsert.setString(3, updatedMovie.getRuntime());
+			stmtInsert.setString(4, updatedMovie.getImage());
+			stmtInsert.setFloat(5, updatedMovie.getUserRating());
+			
+			stmtInsert.setInt(6, movieBefore.getId());
+			
+			System.out.println("Elokuva jota päivitetään:"+movieBefore.getId()+" Vanhat runtime: "+movieBefore.getRuntime()+" Uusi runtime: "+updatedMovie.getRuntime()); //testi
+
+			
+			stmtInsert.executeUpdate();
+			
+
+					
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+			finally {
+				close(stmtInsert, connection);
+			
 		}
 	}
 }

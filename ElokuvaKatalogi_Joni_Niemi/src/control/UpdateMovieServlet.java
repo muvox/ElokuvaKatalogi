@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,25 +14,37 @@ import model.Movie;
 import movie.model.dao.MovieDAO;
 
 
-@WebServlet("/addMovie")
-public class AddMovieServlet extends HttpServlet {
+@WebServlet("/updateMovie")
+public class UpdateMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
- 
-    public AddMovieServlet() {
+
+    public UpdateMovieServlet() {
         super();
-        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jsp = "/view/movieform.jsp";
+		String stringID = request.getParameter("movieid");
+		int movieID = Integer.parseInt(stringID);
+		
+		MovieDAO modo = new MovieDAO();
+		
+		Movie movie = modo.findMovieById(movieID);		
+		
+		//TODO: WIP
+		request.setAttribute("movie", movie);
+				
+		String jsp = "/view/movieUpdate.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
-		dispatcher.forward(request, response);	
+		dispatcher.forward(request, response);		
 		}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doGet(request, response);
+		
+		String idStr = request.getParameter("id");
+		int id = Integer.parseInt(idStr);		
 		
 		String title = request.getParameter("title");
 		
@@ -47,9 +60,11 @@ public class AddMovieServlet extends HttpServlet {
 		
 		MovieDAO modo = new MovieDAO();
 		
-		Movie movie = new Movie(title,desc,runtime,image,userRating);
+		Movie movieBefore = modo.findMovieById(id);
 		
-		modo.addNew(movie);
+		Movie updateMovie = new Movie(title,desc,runtime,image,userRating);
+		
+		modo.updateMovie(movieBefore, updateMovie);
 		
 		response.sendRedirect("listMovies");
 	}

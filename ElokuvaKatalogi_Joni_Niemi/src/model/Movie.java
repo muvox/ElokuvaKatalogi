@@ -11,7 +11,7 @@ public class Movie {
 	
 	//TODO String movieNameTranslated **Elokuvan nimi kielell� jolla k�ytt�j�n maassa n�ytetty
 	
-	String desc;	//lyhyt kuvaus elokuvasta
+	String description;	//lyhyt kuvaus elokuvasta
 	
 	List<Genre>  genres;		//lista genreist�
 
@@ -37,12 +37,12 @@ public class Movie {
 		this.title = movieOriginalTitle;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String movieDescription) {
-		this.desc = movieDescription;
+	public void setDescription(String movieDescription) {
+		this.description = movieDescription;
 	}
 
 	public List<Genre> getGenres() {
@@ -79,28 +79,32 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [movieOriginalTitle=" + title + ", movieDescription=" + desc + "]";
+		return "Movie [title=" + title + ", description=" + description + "]";
 	}
 
-	public Movie(int id, String title, String desc, String runtime,
+	public Movie(int id, String title, String description, String runtime,
 			String image, float userRating) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.desc = desc;
+		this.description = description;
 		this.runtime = runtime;
 		this.image = image;
 		this.userRating = userRating;
 	}
 	
-	public Movie(String title, String desc, String runtime,
+	public Movie(String title, String description, String runtime,
 			String image, float userRating) {
 		super();
 		this.title = title;
-		this.desc = desc;
+		this.description = description;
 		this.runtime = runtime;
 		this.image = image;
 		this.userRating = userRating;
+	}
+	
+	public Movie() {
+		
 	}
 	
 	

@@ -21,6 +21,9 @@
 				<div class="wrapper" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 55%, black), url(${movie.image}) center/cover no-repeat;">
 					<div class="top">
 						<div class="date">
+						                         <a class="edit" href="updateMovie?movieid=${movie.id}">Update</a>
+                        <br>
+                        <a class="edit" href="deleteMovie?movieid=${movie.id}">Delete</a>
 						</div>				
 					</div>
 				
@@ -28,8 +31,7 @@
 					<div class="data-section">
 						<div class="content">
 							<div class="heading">${movie.title}</div>
-							<div class="data">${movie.desc}</div>
-							<a href="movieInfo" class="button">Movie Info</a>
+							<div class="data">${movie.description}</div>
 						</div>
 					</div>
 				</div>
