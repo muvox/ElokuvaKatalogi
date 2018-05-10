@@ -24,16 +24,21 @@ public class UpdateMovieServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String stringID = request.getParameter("movieid");
+		String stringID = (String)request.getParameter("movieid");
+		
+		System.out.println("doGet movieID: "+stringID);
 		int movieID = Integer.parseInt(stringID);
 		
 		MovieDAO modo = new MovieDAO();
 		
 		Movie movie = modo.findMovieById(movieID);		
 		
+		String errorString = (String)request.getParameter("error");
+		System.out.println("Error stringin tulos: "+errorString);
 		//TODO: WIP
 		request.setAttribute("movie", movie);
-				
+		request.setAttribute("error", "0");
+		
 		String jsp = "/view/movieUpdate.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);		
@@ -42,8 +47,10 @@ public class UpdateMovieServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doGet(request, response);
-		
+
+		try {
 		String idStr = request.getParameter("id");
+		System.out.println("doPost movieID: "+idStr);
 		int id = Integer.parseInt(idStr);		
 		
 		String title = request.getParameter("title");
@@ -67,6 +74,16 @@ public class UpdateMovieServlet extends HttpServlet {
 		modo.updateMovie(movieBefore, updateMovie);
 		
 		response.sendRedirect("listMovies");
+		
+		}catch(Exception e) {
+			request.setAttribute("error", "true");
+			RequestDispatcher rd = request.getRequestDispatcher("updateErrorCheck");
+			rd.forward(request,response);			
+		}
+		
+		
+
+		
 	}
 
 }

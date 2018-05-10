@@ -8,6 +8,10 @@
 <title>Update movie information</title>
 </head>
 <body>
+	<div class="toast jam" style="opacity: ${error};">
+  	<span class="close" aria-role="button" tabindex="0"></span>
+  	Lightly toasted with jam.
+	</div>
 	<h1>Update movie information</h1>
 		<form method="post">
 			<table>

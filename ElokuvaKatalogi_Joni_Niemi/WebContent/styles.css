@@ -319,3 +319,23 @@ a {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
+
+/* toast */
+.toast {
+  float:right;
+  color: #000;
+  line-height: 1.5;
+  margin-bottom: 1em;
+  padding: 1.25em;
+  top: 1em;
+  transition: 0.15s ease-in-out;
+  width: 325px;
+}
+
+.jam {
+  background-color: #99004d;
+  color: #fff;
+}
+
+
+

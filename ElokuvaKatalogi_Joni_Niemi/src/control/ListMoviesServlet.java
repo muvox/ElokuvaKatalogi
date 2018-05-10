@@ -20,7 +20,7 @@ public class ListMoviesServlet extends HttpServlet {
 
     public ListMoviesServlet() {
         super();
-    }
+    } 
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
