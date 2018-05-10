@@ -10,9 +10,17 @@
 
 </head>
 <body>
-	<div class="toast jam" style="opacity: ${error};">
-  	<span class="close" aria-role="button" tabindex="0"></span>
-  	Lightly toasted with jam.
+	<div class="toast jam" style="opacity: ${error};
+								float:right;
+  								color: #000;
+  								line-height: 1.5;
+  								margin-bottom: 1em;
+  								padding: 1.25em;
+  								top: 1em;
+  								transition: 0.15s ease-in-out;
+  								width: 325px;">
+  		<span class="close" aria-role="button" tabindex="0"></span>
+  		Lightly toasted with jam.
 	</div>
 	<h1>Update movie information</h1>
 		<form method="post">
