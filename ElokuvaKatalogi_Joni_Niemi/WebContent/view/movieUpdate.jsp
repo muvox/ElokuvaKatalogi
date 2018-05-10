@@ -10,9 +10,11 @@
 
 </head>
 <body>
-	<div class="toast jam" style="opacity: ${error};
+	<div class="toast jam" style="
+								opacity: ${error};
 								float:right;
-  								color: #000;
+  								background-color: #99004d;
+  								color: #fff;
   								line-height: 1.5;
   								margin-bottom: 1em;
   								padding: 1.25em;
