@@ -154,9 +154,10 @@ a {
 }
 
 body {
-  background: #FAFAFA;
+  background: #966fd6;;
   font-family: 'Roboto';
-  height: 100vh;
+  height: 100%;
+  margin:0;
 }
 
 a {

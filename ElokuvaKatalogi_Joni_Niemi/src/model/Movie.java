@@ -13,7 +13,15 @@ public class Movie {
 	
 	String description;	//lyhyt kuvaus elokuvasta
 	
-	List<Genre>  genres;		//lista genreist�
+	public boolean[] getGenres() {
+		return genres;
+	}
+
+	public void setGenres(boolean[] genres) {
+		this.genres = genres;
+	}
+
+	boolean[] genres;//lista genreist�
 
 	String runtime;		// elokuvan kesto
 	
@@ -45,13 +53,6 @@ public class Movie {
 		this.description = movieDescription;
 	}
 
-	public List<Genre> getGenres() {
-		return genres;
-	}
-
-	public void setGenres(List<Genre> genres) {
-		this.genres = genres;
-	}
 
 	public String getRuntime() {
 		return runtime;

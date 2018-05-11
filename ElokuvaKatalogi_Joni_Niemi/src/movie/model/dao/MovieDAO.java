@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import model.Movie;
 
 public class MovieDAO extends DataAccessObject{
+	
+	public static boolean allFalse(boolean[] array) {
+		
+		for(boolean b : array) if(b) return false;
+		return true;
+	}
 
 	public ArrayList<Movie> findAll() {	
 		Connection conn = null;
@@ -104,6 +110,50 @@ public class MovieDAO extends DataAccessObject{
 		stmtInsert.setString(3, movie.getRuntime());
 		stmtInsert.setString(4, movie.getImage());
 		stmtInsert.setFloat(5, movie.getUserRating());
+		stmtInsert.executeUpdate();
+		
+		stmtInsert = null;
+		
+		boolean[] boolList = movie.getGenres();
+		
+		boolean allFalse = allFalse(boolList);
+		
+		System.out.println("allFalse :"+allFalse);
+		
+		if(!allFalse) {
+			String genresInsert = "INSERT INTO movie_genres(movie_id,genre_id) VALUES ";
+			stmtInsert = connection.prepareStatement(genresInsert);
+		
+			for(int i=0; i<boolList.length;i++) {				
+				if(boolList[i]) {
+					genresInsert = genresInsert + "("+Integer.valueOf(movie.getId())+","+i+"),";
+					System.out.println(genresInsert);
+				}
+				
+			}
+			
+			genresInsert = genresInsert.substring(0, genresInsert.length()-1);
+			stmtInsert.executeUpdate();
+		}	
+		
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}finally {
+			close(stmtInsert, connection);
+		}
+	}
+	
+	public void deleteMovie(Movie movie) {
+		Connection connection = null;
+		PreparedStatement stmtInsert = null;
+		String movieID = Integer.toString(movie.getId());
+		
+		try {
+		connection = getConnection();
+		String sqlDelete = "DELETE m, mg FROM movie m JOIN movie_genres mg ON m.id = mg.movie_id WHERE m.id = ?";
+		stmtInsert = connection.prepareStatement(sqlDelete);
+		stmtInsert.setString(1, movieID);
+		System.out.println("movie id : "+movieID);
 		stmtInsert.executeUpdate();
 		
 		}catch(SQLException e) {
