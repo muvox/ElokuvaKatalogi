@@ -85,8 +85,6 @@ public class MovieDAO extends DataAccessObject{
 			while(rs.next()) {
 				movie = readMovie(rs);
 			}
-	
-
 		}catch(SQLException e) {
 			throw new RuntimeException(e);
 		}finally {
@@ -95,6 +93,34 @@ public class MovieDAO extends DataAccessObject{
 		
 		return movie;
 	}
+	
+	public int findLatestMovieId() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int id = 0;
+		try {
+			// Luodaan yhteys
+			conn = getConnection();
+			String sqlSelect = "SELECT MAX(id) FROM movie";
+			
+			stmt = conn.prepareStatement(sqlSelect);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {				
+				id = rs.getInt(1);
+			}
+			
+			}catch(SQLException e) {
+				throw new RuntimeException(e);
+			}finally {
+				close(stmt, conn); // Suljetaan
+			}
+		
+			
+			return id;
+		}
 	
 	public void addNew(Movie movie) {
 		Connection connection = null;
@@ -122,17 +148,20 @@ public class MovieDAO extends DataAccessObject{
 		
 		if(!allFalse) {
 			String genresInsert = "INSERT INTO movie_genres(movie_id,genre_id) VALUES ";
-			stmtInsert = connection.prepareStatement(genresInsert);
+			
 		
 			for(int i=0; i<boolList.length;i++) {				
 				if(boolList[i]) {
-					genresInsert = genresInsert + "("+Integer.valueOf(movie.getId())+","+i+"),";
+					genresInsert = genresInsert + "("+findLatestMovieId()+","+i+"),";
 					System.out.println(genresInsert);
+					System.out.println(boolList[i]);
 				}
 				
 			}
 			
+			
 			genresInsert = genresInsert.substring(0, genresInsert.length()-1);
+			stmtInsert = connection.prepareStatement(genresInsert);
 			stmtInsert.executeUpdate();
 		}	
 		

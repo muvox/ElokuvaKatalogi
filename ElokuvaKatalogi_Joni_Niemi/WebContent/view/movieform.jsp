@@ -38,15 +38,16 @@
 				</tr>	
 				<tr>
 					<td>Genres</td>
-					<td><input type="checkbox" name="action" value="action"> Action
-						<input type="checkbox" name="genre" value="comedy"> Comedy
-						<input type="checkbox" name="genre" value="drama"> Drama
-						<input type="checkbox" name="genre" value="fantasy"> Fantasy
-						<input type="checkbox" name="genre" value="horror"> Horror
-						<input type="checkbox" name="genre" value="romance"> Romance
-						<input type="checkbox" name="genre" value="scifi"> Sci-Fi
-						<input type="checkbox" name="genre" value="western"> Western
-						<input type="checkbox" name="genre" value="thriller"> Thriller
+					<td>
+					<input type="checkbox" name="action" value="action"> Action
+					<input type="checkbox" name="comedy" value="comedy"> Comedy
+					<input type="checkbox" name="drama" value="drama"> Drama
+					<input type="checkbox" name="fantasy" value="fantasy"> Fantasy
+					<input type="checkbox" name="horror" value="horror"> Horror
+					<input type="checkbox" name="romance" value="romance"> Romance
+					<input type="checkbox" name="scifi" value="scifi"> Sci-Fi
+					<input type="checkbox" name="western" value="western"> Western
+					<input type="checkbox" name="thriller" value="thriller"> Thriller
 					</td>
 				</tr>
 				<tr>

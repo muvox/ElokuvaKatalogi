@@ -52,36 +52,98 @@ public class AddMovieServlet extends HttpServlet {
 		
 		genres = new boolean[9];
 		//action, comedy. drama, fantasy, horror, romance, scifi, western, thriller
-		System.out.println("Size of genres arrat: "+genres.length);
+		System.out.println("Size of genres array: "+genres.length);
 		
 		String genreAction = request.getParameter("action");
-		System.out.println(genreAction);
-		dump = Boolean.valueOf(genreAction);
+		if(genreAction==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[0] = dump;
+		
+		System.out.println("Genre action: "+genres[0]);
+		
+		
+		
 		String genreComedy = request.getParameter("comedy");
-		dump = Boolean.valueOf(genreAction);
+		if(genreComedy==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[1] = dump;
+		System.out.println("Genre comedy: "+genres[1]);
+			
+			
 		String genreDrama = request.getParameter("drama");
-		dump = Boolean.valueOf(genreAction);
+		if(genreDrama==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[2] = dump;
+		
 		String genreFantasy = request.getParameter("fantasy");
-		dump = Boolean.valueOf(genreAction);
+		if(genreFantasy==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[3] = dump;
+		
 		String genreHorror = request.getParameter("horror");
-		dump = Boolean.valueOf(genreAction);
+		if(genreHorror==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[4] = dump;
+		
 		String genreRomance = request.getParameter("romance");
-		dump = Boolean.valueOf(genreAction);
+		if(genreRomance==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[5] = dump;
+		
+		
 		String genreScifi = request.getParameter("scifi");
-		dump = Boolean.valueOf(genreAction);
+		if(genreScifi==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[6] = dump;
+		
+		
 		String genreWestern = request.getParameter("western");
-		dump = Boolean.valueOf(genreAction);
+		if(genreWestern==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[7] = dump;
+		
+		
 		String genreThriller = request.getParameter("thriller");
-		dump = Boolean.valueOf(genreAction);
+		if(genreThriller==null){
+			dump = false;
+			}
+		else {
+			dump = true;
+			}
 		genres[8] = dump;
+		
 
 		MovieDAO modo = new MovieDAO();
 		
