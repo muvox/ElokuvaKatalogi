@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
@@ -13,21 +14,23 @@ public class Movie {
 	
 	String description;	//lyhyt kuvaus elokuvasta
 	
-	public boolean[] getGenres() {
-		return genres;
-	}
-
-	public void setGenres(boolean[] genres) {
-		this.genres = genres;
-	}
-
-	boolean[] genres;//lista genreist�
+	boolean[] genreList;//lista genreist�
 
 	String runtime;		// elokuvan kesto
 	
 	String image;			//url elokuvan kuvasta
 	
 	float userRating;			//floattinga k�ytt�jien arvosana 
+	
+	ArrayList<Genre> genres;
+	
+	public ArrayList<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(ArrayList<Genre> genres) {
+		this.genres = genres;
+	}
 
 	public int getId() {
 		return id;
@@ -78,6 +81,15 @@ public class Movie {
 		this.userRating = userRating;
 	}
 
+	
+	public boolean[] getGenreList() {
+		return genreList;
+	}
+
+	public void setGenreList(boolean[] genreList) {
+		this.genreList = genreList;
+	}
+
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", description=" + description + "]";
@@ -92,6 +104,7 @@ public class Movie {
 		this.runtime = runtime;
 		this.image = image;
 		this.userRating = userRating;
+
 	}
 	
 	public Movie(String title, String description, String runtime,
@@ -106,6 +119,28 @@ public class Movie {
 	
 	public Movie() {
 		
+	}
+	
+	public Movie(int id, String title, String description, String runtime,
+			String image, float userRating, ArrayList<Genre> genres) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.runtime = runtime;
+		this.image = image;
+		this.userRating = userRating;
+		this.genres = genres;
+	}
+	
+	public Movie(Movie movie) {
+		this.id = movie.id;
+		this.title = movie.title;
+		this.description = movie.description;
+		this.runtime = movie.runtime;
+		this.image = movie.image;
+		this.userRating = movie.userRating;
+		this.genres = movie.genres;
 	}
 	
 	

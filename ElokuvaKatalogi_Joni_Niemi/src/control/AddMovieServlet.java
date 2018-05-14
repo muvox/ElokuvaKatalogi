@@ -54,6 +54,7 @@ public class AddMovieServlet extends HttpServlet {
 		//action, comedy. drama, fantasy, horror, romance, scifi, western, thriller
 		System.out.println("Size of genres array: "+genres.length);
 		
+	
 		String genreAction = request.getParameter("action");
 		if(genreAction==null){
 			dump = false;
@@ -63,8 +64,7 @@ public class AddMovieServlet extends HttpServlet {
 			}
 		genres[0] = dump;
 		
-		System.out.println("Genre action: "+genres[0]);
-		
+		System.out.println("Genre action: "+genres[0]);		
 		
 		
 		String genreComedy = request.getParameter("comedy");
@@ -75,7 +75,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[1] = dump;
-		System.out.println("Genre comedy: "+genres[1]);
+		System.out.println("Genre "+dump);
 			
 			
 		String genreDrama = request.getParameter("drama");
@@ -86,6 +86,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[2] = dump;
+		System.out.println("Genre "+dump);
 		
 		String genreFantasy = request.getParameter("fantasy");
 		if(genreFantasy==null){
@@ -95,6 +96,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[3] = dump;
+		System.out.println("Genre "+dump);
 		
 		String genreHorror = request.getParameter("horror");
 		if(genreHorror==null){
@@ -104,6 +106,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[4] = dump;
+		System.out.println("Genre "+dump);
 		
 		String genreRomance = request.getParameter("romance");
 		if(genreRomance==null){
@@ -113,6 +116,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[5] = dump;
+		System.out.println("Genre "+dump);
 		
 		
 		String genreScifi = request.getParameter("scifi");
@@ -123,6 +127,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[6] = dump;
+		System.out.println("Genre "+dump);
 		
 		
 		String genreWestern = request.getParameter("western");
@@ -133,6 +138,7 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[7] = dump;
+		System.out.println("Genre "+dump);
 		
 		
 		String genreThriller = request.getParameter("thriller");
@@ -143,13 +149,14 @@ public class AddMovieServlet extends HttpServlet {
 			dump = true;
 			}
 		genres[8] = dump;
+		System.out.println("Genre "+dump);
 		
 
 		MovieDAO modo = new MovieDAO();
 		
 		Movie movie = new Movie(title,desc,runtime,image,userRating);
 		
-		movie.setGenres(genres);
+		movie.setGenreList(genres);
 		
 		modo.addNew(movie);
 		

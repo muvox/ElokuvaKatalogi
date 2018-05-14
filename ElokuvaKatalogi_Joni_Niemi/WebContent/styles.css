@@ -72,7 +72,7 @@ a {
 }
 .card .top {
   color: white;
-  padding: 1em;
+  padding: 0. 5em;
 }
 .card .top .day {
   float: left;
@@ -154,7 +154,13 @@ a {
 }
 
 body {
-  background: #966fd6;;
+  background:
+radial-gradient(black 15%, transparent 16%) 0 0,
+radial-gradient(black 15%, transparent 16%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#282828;
+background-size:16px 16px;
   font-family: 'Roboto';
   height: 100%;
   margin:0;
@@ -166,9 +172,11 @@ a {
 
 .card {
     display:inline-block;
-  padding: 15px;
+  padding: 1px;
     max-width: 30em;
+    min-width: 20em;
   width: 40%;
+  padding: 0.5em;
 }
 .card .menu {
   padding: 0;
@@ -337,6 +345,34 @@ a {
   background-color: #99004d;
   color: #fff;
 }
+.tags{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
 
-
-
+.tags li {
+  position: relative;
+  float: left;
+  margin: 8px 0 0 8px;
+}
+.tags a {
+  height: 26px;
+  line-height: 23px;
+  padding: 0 9px 0 0;
+  font-size: 12px;
+  color: #555;
+  text-decoration: none;
+  text-shadow: 0 1px white;
+  background: #fafafa;
+  border-width: 1px 0 1px 1px;
+  border-style: solid;
+  border-color: #dadada #d2d2d2 #c5c5c5;
+  border-radius: 3px 0 0 3px;
+  background-image: -webkit-linear-gradient(top, #fcfcfc, #f0f0f0);
+  background-image: -moz-linear-gradient(top, #fcfcfc, #f0f0f0);
+  background-image: -o-linear-gradient(top, #fcfcfc, #f0f0f0);
+  background-image: linear-gradient(to bottom, #fcfcfc, #f0f0f0);
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
+}

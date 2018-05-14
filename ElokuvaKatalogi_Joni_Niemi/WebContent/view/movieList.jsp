@@ -12,14 +12,23 @@
 
 <body>
 
-<a href="addMovie">Add new Movie</a>
-<br>
 
+<br>
+<div class="sidebar" style="width:15em">
+
+<a href="addMovie">Add new Movie</a>
+
+
+</div>
+<div class="container" style="margin-left:15em">
 		<c:forEach items="${movies}" var="movie">
 	
 			<div class="card">
 				<div class="wrapper" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 1%, rgba(0, 0, 0, 0) 55%, black), url(${movie.image}) center/cover no-repeat;">
 					<div class="top">
+					
+						
+						
 						<div class="date">
 						 	<a class="edit" href="updateMovie?movieid=${movie.id}">Update</a>
                         	<br>
@@ -33,11 +42,16 @@
 							<div class="heading">${movie.title}</div>
 							<div class="data">${movie.description}</div>
 						</div>
+						<ul class="tags">
+						<c:forEach items="${movie.genres}" var="genre">
+							<li><a href="ListGenre?gnereid=${genre.id}">${genre.name} </a></li>
+						</c:forEach>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
-
+</div>
 
 
 </body>
