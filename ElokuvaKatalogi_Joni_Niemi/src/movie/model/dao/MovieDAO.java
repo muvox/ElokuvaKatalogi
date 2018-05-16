@@ -16,6 +16,74 @@ public class MovieDAO extends DataAccessObject{
 		for(boolean b : array) if(b) return false;
 		return true;
 	}
+	
+	public ArrayList<Movie> searchMovieByTitle(String searchString){
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		PreparedStatement stmtGenre = null;
+		ResultSet rs = null;
+		ResultSet rsGenre = null;
+		
+		ArrayList<Movie> movies = new ArrayList<Movie>();
+		Movie movie = null; 
+		Genre genre = null;
+		try {
+			
+		// Luodaan yhteys
+		conn = getConnection();
+		// Luodaan komento: haetaan kaikki rivit henkilo-taulusta
+		String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie "
+				+ "WHERE title LIKE ? ORDER BY movie.title;";
+		// Valmistellaan komento:
+		stmt = conn.prepareStatement(sqlSelect);
+		
+		searchString = "%"+searchString+"%";
+		
+		stmt.setString(1, searchString);
+		// L�hetet��n komento:
+		rs = stmt.executeQuery();
+		// K�yd��n tulostaulun rivit l�pi ja luetaan readHenkilo()-metodilla:
+		while (rs.next()) {
+			movie = readMovie(rs);
+			
+			String sqlGenreSelect= "SELECT genre.id, genre.name "
+					+ "FROM genre, movie_genres, movie "
+					+ "WHERE movie.id = ? "
+					+ "AND movie.id = movie_genres.movie_id "
+					+ "AND genre.id = movie_genres.genre_id "
+					+ "ORDER BY genre.id";
+			
+			stmtGenre = conn.prepareStatement(sqlGenreSelect);
+			stmtGenre.setInt(1, movie.getId());
+			
+			rsGenre = stmtGenre.executeQuery();
+			ArrayList<Genre> genres = new ArrayList<>();
+			while(rsGenre.next()) {
+				genre = readGenre(rsGenre);
+
+				//System.out.println("Genre: "+genre.getName());
+				genres.add(genre);
+				
+				}
+			movie.setGenres(genres);
+			
+			
+			System.out.println(movie.getGenres().get(0).getName());
+			
+			// lisätään genret elokuvaan ja elokuvat l
+			
+			movies.add(movie);
+			
+
+
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+			} finally {
+				close(rs, stmt, conn); // Suljetaan
+				}
+	return movies;
+	}
 
 	public ArrayList<Movie> findAll() {	
 		Connection conn = null;
@@ -31,7 +99,7 @@ public class MovieDAO extends DataAccessObject{
 			// Luodaan yhteys
 			conn = getConnection();
 			// Luodaan komento: haetaan kaikki rivit henkilo-taulusta
-			String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie;";
+			String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie ORDER BY movie.title;";
 			// Valmistellaan komento:
 			stmt = conn.prepareStatement(sqlSelect);
 			// L�hetet��n komento:
@@ -108,6 +176,33 @@ public class MovieDAO extends DataAccessObject{
 		}
 	}
 	
+	public String findGenreName(int id) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String genreName = null;
+
+		try {
+			String sqlSelect = "SELECT genre.name FROM genre "
+							+ "WHERE genre.id = ? ;";
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sqlSelect);
+			stmt.setInt(1, id);
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				genreName = rs.getString("name");
+
+			}
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+			}finally {
+				close(rs, stmt, conn);
+				}
+		return genreName;
+	}
+	
 	public ArrayList<Movie> findAllByGenre(int id){
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -123,13 +218,13 @@ public class MovieDAO extends DataAccessObject{
 			conn = getConnection();
 			// Luodaan komento: haetaan kaikki rivit henkilo-taulusta
 			String sqlSelect = "SELECT movie.id, movie.title, movie.description, movie.runtime, movie.image, movie.userRating " 
-								+"FROM movie, movie_genres, genre"
+								+"FROM movie, movie_genres, genre "
 								+"WHERE genre_id = ? "
 								+"AND genre.id = movie_genres.genre_id "
-								+"AND movie.id = movie_genres.movie_id;";
+								+"AND movie.id = movie_genres.movie_id";
 			// Valmistellaan komento:
 			stmt = conn.prepareStatement(sqlSelect);
-			stmt.setFloat(1, id);
+			stmt.setInt(1, id);
 			// L�hetet��n komento:
 
 			rs = stmt.executeQuery();

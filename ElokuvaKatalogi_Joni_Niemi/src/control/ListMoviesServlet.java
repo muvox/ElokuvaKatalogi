@@ -46,7 +46,13 @@ public class ListMoviesServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		String searchString = request.getParameter("search");
+		
+		request.setAttribute("search", searchString);
+
+		RequestDispatcher rd = request.getRequestDispatcher("searchMovie");
+		rd.forward(request,response);
 	}
 
 }

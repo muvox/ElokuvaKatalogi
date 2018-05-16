@@ -10,6 +10,16 @@ a {
   text-decoration: none;
 }
 
+.container{
+	display:flex;
+	flex-wrap:wrap;
+}
+
+.sidebar{
+	position: fixed;
+	background: #4d5158;
+	height: 100%;
+}
 .card {
   padding: 15px;
   width: 40%;
@@ -161,9 +171,9 @@ radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
 radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
 background-color:#282828;
 background-size:16px 16px;
-  font-family: 'Roboto';
-  height: 100%;
-  margin:0;
+ font-family: 'Roboto';
+ height: 100%;
+ margin:0;
 }
 
 a {
@@ -249,6 +259,7 @@ a {
 .card .data {
   height: 65px;
   margin: 0.5em;
+
 }
 .card .top {
   color: white;
@@ -375,4 +386,160 @@ a {
   background-image: linear-gradient(to bottom, #fcfcfc, #f0f0f0);
   -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+label{
+  display: block;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: none;
+}
+
+label.last{
+  border-bottom: 1px solid #fff;
+}
+
+ul li a{
+  padding: 10px;
+  background: #59ABE3;
+  list-
+}
+
+.sidebar input[type="checkbox"]{
+  position: absolute;
+  left: -9999px;
+}
+
+.sidebar input[type="checkbox"] ~ ul{
+  height: 0;
+  transform: scaleY(0);
+}
+
+.sidebar input[type="checkbox"]:checked ~ ul{
+  height: 100%;
+  transform-origin: top;
+  transition: transform .2s ease-out;
+  transform: scaleY(1); 
+}
+
+.sidebar input[type="checkbox"]:checked + label{
+  background: #4d5158;
+  border-bottom: 1px solid #fff;
+}
+
+
+.cd-accordion-menu input[type=checkbox] {
+  /* hide native checkbox */
+  position: absolute;
+  opacity: 0;
+}
+  .cd-accordion-menu label, .cd-accordion-menu a {
+  position: relative;
+  display: block;
+  padding: 18px 18px 18px 10px;
+  background: #4d5158;
+  color: #ffffff;
+  font-size: 1rem;
+}
+.cd-accordion-menu{
+	list-style:none;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+
+.sidebar li{
+	border-bottom: 1px solid #26282d;
+}
+
+
+.cd-accordion-menu li ul{
+	list-style:none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	background-color: #4d5158;
+}
+
+.sidebar a:hover{
+	background-color: #26282d ;
+}
+.sidebar label:hover{
+	background-color: #26282d ;
+}
+.cd-accordion-menu ul {
+  /* by default hide all sub menus */
+  display: none;
+  list-style:none;
+}
+
+.cd-accordion-menu input[type=checkbox]:checked + label + ul,
+.cd-accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+  display: block;
+}
+cd-accordion-menu ul:hover {
+	background-color: #26282d ;
+}
+
+.has-children:hover{
+		background-color: #26282d ;
+
+}
+
+.sidebar input[type=text] {
+	width: 80%;
+ 	padding: 18px 18px 18px 10px;
+	text-align: left;
+	background-color: #4d5158;
+	color: #ffffff;
+  	font-size: 1rem;
+  	border:0;
+
+}
+
+.sidebar input[type=text]:focus {
+    background-color: #4d5158;
+}
+.sidebar input[type=text]:hover {
+    background-color: #26282d;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ffffff;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #ffffff;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #ffffff;
+}
+
+.search {
+	display:flex;
+}
+.search button {
+  float: right;
+  width: 25%;
+  background: #4d5158;
+  color: white;
+  font-size: 17px;
+  border: 0 solid grey;
+  border-left: 0 solid #26282d; /* Prevent double borders */
+  cursor: pointer;
+}
+
+.search button:hover {
+	    background-color: #26282d;
+}
+
+.container h1{
+	color: white;
+	float:left;
+	width:100%;
+	margin: 0.5em;
 }
