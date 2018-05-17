@@ -5,13 +5,48 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-Tämä sovellus tulee näyttämään listan elokuvista. 
-<a href="listMovies">List Movies</a>
-<a href="addMovie">Add Movie</a>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Movie List</title>
+</head>
+<body style="background: #4d5158;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div style="
+  justify-content: center;
+  display:flex;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50em;
+  height: 10em;
+  background-color: #ccc;
+  border-radius: 3px;">
+<div class="fa-7x">
+
+
+<a style="color: white;	text-decoration: none; padding-top: 1em;" href="listMovies">
+Movie List
+<i style="color:white;" class="fas fa-film" data-fa-transform="rotate-90">
+</i>
+</a>
+</div>
+
+</div>
+<p style="color:white;"> By Joni Niemi</p>
 </body>
 </html>

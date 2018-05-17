@@ -26,31 +26,29 @@ public class ListMoviesServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//luodaan movieDAO
 		MovieDAO moDAO = new MovieDAO();
 		
+		//pyydetään movieDAO:lta kaikki alokuvat
 		ArrayList<Movie> movies = moDAO.findAll();	
 		
+		//asetetaan elokuvat arvoiksi sivulle
 		request.setAttribute("movies", movies);
 		
-		Movie movie = new Movie(movies.get(0));
-		
-		System.out.println(movie.getTitle());
-		
-		System.out.println("Genre: "+movie.getGenres().size());
-		
-		
-		
+		//avataan movieList sivu		
 		String jsp = "/view/movieList.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//otetaan talteen hakusana
 		String searchString = request.getParameter("search");
 		
+		//lähetetään hakusana arvona eteenpäin SearchMovieServletille
 		request.setAttribute("search", searchString);
-
+		
+		//avataan SearchMovieServlet
 		RequestDispatcher rd = request.getRequestDispatcher("searchMovie");
 		rd.forward(request,response);
 	}

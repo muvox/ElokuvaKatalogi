@@ -2,9 +2,9 @@ package model;
 
 public class Genre {
 	
-	String name;
+	String name;	//genren nimi
 	
-	int id;
+	int id;			//yksilöivä id
 	
 	public String getName() {
 		return name;

@@ -22,20 +22,18 @@ public class UpdateErrorCheckServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//Otetan vastaan elokuva id stringinä, muutetaan intiksi		
 		String stringID = (String)request.getParameter("movieid");
-		
-		System.out.println("doGet movieID: "+stringID);
-		
 		int movieID = Integer.parseInt(stringID);
 		
-		MovieDAO modo = new MovieDAO();
-		
+		//luodaan movieDao, ja pyydetään eloku id:n perusteella
+		MovieDAO modo = new MovieDAO();		
 		Movie movie = modo.findMovieById(movieID);		
 		
-		//TODO: WIP
+		//asetetaan eloku arvoksi sivulle
 		request.setAttribute("movie", movie);
 
+		//asetetaan virheikkunan opacity arvo ja ohjataan sivulle
 		request.setAttribute("error", "1");
 		String jsp = "/view/movieUpdate.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);

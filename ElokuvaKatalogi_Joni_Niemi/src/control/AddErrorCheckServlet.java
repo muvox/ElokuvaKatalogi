@@ -23,22 +23,28 @@ public class AddErrorCheckServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//Pyydetään elokuvan id edelliseltä servletiltä
 		String stringID = (String)request.getParameter("movieid");
+		
 		
 		if(stringID != null) {
 		
-		System.out.println("doGet movieID: "+stringID);
-		
 		int movieID = Integer.parseInt(stringID);
 		
+		// luodaan MovieDAO 
 		MovieDAO modo = new MovieDAO();
 		
+		//Pyydetään movieDAO:lta elokuva id:n perusteella
 		Movie movie = modo.findMovieById(movieID);		
 		
-		//TODO: WIP
+		//asetetaan elokuva olio attribuutiksi sivulle
 		request.setAttribute("movie", movie);
 		}
+		
+		//asetetaan error arvo ykköseksi (tämä asettaa virheikkunan opacity arvon 1:ksi)
 		request.setAttribute("error", "1");
+		
 		String jsp = "/view/movieform.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);	

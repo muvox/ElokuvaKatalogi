@@ -26,8 +26,10 @@ public class AddMovieServlet extends HttpServlet {
    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//asetetaan error arvoksi 0 (virheikkunan opacity arvo)
 		request.setAttribute("error", "0");
 		
+		//avataan sivu
 		String jsp = "/view/movieform.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);	
@@ -38,8 +40,11 @@ public class AddMovieServlet extends HttpServlet {
 		//doGet(request, response);
 		
 		try {
+		//luodaan booleani jota käytetään lisäämään genrejen boolean arvoja boolean arrayssa 
 		boolean dump;
+		boolean[] genres;
 		
+		//Otetaan sivulta elokuvan tiedot talteen
 		String title = request.getParameter("title");
 		
 		String desc = request.getParameter("description");
@@ -52,13 +57,13 @@ public class AddMovieServlet extends HttpServlet {
 
 		String image = request.getParameter("image");
 		
-		boolean[] genres;
 		
+		//alustetaan genres boolean array
 		genres = new boolean[9];
-		//action, comedy. drama, fantasy, horror, romance, scifi, western, thriller
-		System.out.println("Size of genres array: "+genres.length);
+		//action, comedy. drama, fantasy, horror, romance, scifi, western, thriller (järhestys jossa genret esiintyvät)
 		
 	
+		//otetaan sivulta action arvon checkbox arvo. Palauttaa 1 mikäli checkbox oli ruksattu. Palauttaa null mikäli ei
 		String genreAction = request.getParameter("action");
 		if(genreAction==null){
 			dump = false;
@@ -66,10 +71,10 @@ public class AddMovieServlet extends HttpServlet {
 		else {
 			dump = true;
 			}
+		//asetetaan sivulta otettu arvo ensin dump booleaniksi ja sitten lisätään boolean arrayhin		
 		genres[0] = dump;
 		
-		System.out.println("Genre action: "+genres[0]);		
-		
+		//sama toistuu jokaiselle checkboxille sivulla
 		
 		String genreComedy = request.getParameter("comedy");
 		if(genreComedy==null){
@@ -155,18 +160,24 @@ public class AddMovieServlet extends HttpServlet {
 		genres[8] = dump;
 		System.out.println("Genre "+dump);
 		
-
+		//luodaan MovieDAO
 		MovieDAO modo = new MovieDAO();
 		
+		//luodaan elokuva olio sivulta saaduilla arvoilla
 		Movie movie = new Movie(title,desc,runtime,image,userRating);
 		
+		//lisätään genre array genrelistaksi elokuva oliolle
 		movie.setGenreList(genres);
 		
+		//pyydetään movieDAO:lta elokuvan lisäystä tietokantaan
 		modo.addNew(movie);
 		
+		//ohjataan takaisin elokuva listaan
 		response.sendRedirect("listMovies");
 		
 		}catch(Exception e) {
+			//asetetaan error arvoksi true ja lähetetään arvo addErrorCheck servletille
+			System.out.println(e);
 			request.setAttribute("error", "true");
 			RequestDispatcher rd = request.getRequestDispatcher("addErrorCheck");
 			rd.forward(request,response);			

@@ -11,12 +11,14 @@ import model.Movie;
 
 public class MovieDAO extends DataAccessObject{
 	
+	//tarkistetaan oliko kaikki booleanit false. Käytetään vain genrejen boolean listan tarkistamiseen
 	public static boolean allFalse(boolean[] array) {
 		
 		for(boolean b : array) if(b) return false;
 		return true;
 	}
 	
+	//haetan elokuvan nimeä hakusanalla, palauttaa listan osumista.
 	public ArrayList<Movie> searchMovieByTitle(String searchString){
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -27,6 +29,7 @@ public class MovieDAO extends DataAccessObject{
 		ArrayList<Movie> movies = new ArrayList<Movie>();
 		Movie movie = null; 
 		Genre genre = null;
+		
 		try {
 			
 		// Luodaan yhteys
@@ -34,18 +37,18 @@ public class MovieDAO extends DataAccessObject{
 		// Luodaan komento: haetaan kaikki rivit henkilo-taulusta
 		String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie "
 				+ "WHERE title LIKE ? ORDER BY movie.title;";
-		// Valmistellaan komento:
+		//Valmistellaan komento:
 		stmt = conn.prepareStatement(sqlSelect);
-		
-		searchString = "%"+searchString+"%";
-		
+		searchString = "%"+searchString+"%";		
 		stmt.setString(1, searchString);
-		// L�hetet��n komento:
+		
+		// lähetetään komento
 		rs = stmt.executeQuery();
-		// K�yd��n tulostaulun rivit l�pi ja luetaan readHenkilo()-metodilla:
+		// käydään läpi tulokset readMovie metodilla, ja jokaista elokuvaa kohden käydään läpi genret readGenre metodilla
 		while (rs.next()) {
 			movie = readMovie(rs);
 			
+			//Valmistellaan genren haku komento
 			String sqlGenreSelect= "SELECT genre.id, genre.name "
 					+ "FROM genre, movie_genres, movie "
 					+ "WHERE movie.id = ? "
@@ -56,35 +59,33 @@ public class MovieDAO extends DataAccessObject{
 			stmtGenre = conn.prepareStatement(sqlGenreSelect);
 			stmtGenre.setInt(1, movie.getId());
 			
+			//lähetetään komento
 			rsGenre = stmtGenre.executeQuery();
+			
+			//luodaan lista genrejä varten
 			ArrayList<Genre> genres = new ArrayList<>();
 			while(rsGenre.next()) {
+				//luetaan genre
 				genre = readGenre(rsGenre);
-
-				//System.out.println("Genre: "+genre.getName());
+				//lisätään genre listaan
 				genres.add(genre);
 				
 				}
+			//asetetaan elokuvalle genret
 			movie.setGenres(genres);
-			
-			
-			System.out.println(movie.getGenres().get(0).getName());
-			
-			// lisätään genret elokuvaan ja elokuvat l
-			
+
+			//lisätään elokuva elokuvalistaan
 			movies.add(movie);
-			
-
-
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 			} finally {
 				close(rs, stmt, conn); // Suljetaan
 				}
-	return movies;
-	}
+		return movies;
+		}
 
+	//tällä metodilla etsitään kaikki elokuvat tietokannasta
 	public ArrayList<Movie> findAll() {	
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -102,42 +103,40 @@ public class MovieDAO extends DataAccessObject{
 			String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie ORDER BY movie.title;";
 			// Valmistellaan komento:
 			stmt = conn.prepareStatement(sqlSelect);
-			// L�hetet��n komento:
+			// Lähetään komento:
 			rs = stmt.executeQuery();
-			// K�yd��n tulostaulun rivit l�pi ja luetaan readHenkilo()-metodilla:
+			// käydään läpi tulokset readMovie metodilla, ja jokaista elokuvaa kohden käydään läpi genret readGenre metodilla
 			while (rs.next()) {
 				movie = readMovie(rs);
 				
+				//Valmistellaan genren haku komento
 				String sqlGenreSelect= "SELECT genre.id, genre.name "
 						+ "FROM genre, movie_genres, movie "
 						+ "WHERE movie.id = ? "
 						+ "AND movie.id = movie_genres.movie_id "
 						+ "AND genre.id = movie_genres.genre_id "
 						+ "ORDER BY genre.id";
-				
+
 				stmtGenre = conn.prepareStatement(sqlGenreSelect);
 				stmtGenre.setInt(1, movie.getId());
 				
+				//lähetetään komento
 				rsGenre = stmtGenre.executeQuery();
+				
+				//luodaan lista genrejä varten
 				ArrayList<Genre> genres = new ArrayList<>();
+				
 				while(rsGenre.next()) {
+					//luetaan genre
 					genre = readGenre(rsGenre);
-
-					//System.out.println("Genre: "+genre.getName());
+					//lisätään genre listaan
 					genres.add(genre);
-					
 					}
+				//asetetaan genret elokuvalle
 				movie.setGenres(genres);
 				
-				
-				System.out.println(movie.getGenres().get(0).getName());
-				
-				// lisätään genret elokuvaan ja elokuvat l
-				
+				//lisätään elokuva elokuvalistaan
 				movies.add(movie);
-				
-	
-
 				}
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
@@ -145,11 +144,12 @@ public class MovieDAO extends DataAccessObject{
 					close(rs, stmt, conn); // Suljetaan
 					}
 		return movies;
-	}
+		}
 	
+	//metodi jota käytetään elokuvien lukemiseen tietokannan vastauksista
 	private Movie readMovie(ResultSet rs) {	
 		try {
-			// Haetaan yhden henkil�n tiedot kyselyn tulostaulun (ResultSet-tyyppinen rs-olion) aktiiviselta tietorivilt�
+			// Haetaan elokuvan tiedon kenttä kerrallaan
 			int id = rs.getInt("id");
 			String title = rs.getString("title");
 			String desc = rs.getString("description");
@@ -157,25 +157,28 @@ public class MovieDAO extends DataAccessObject{
 			String image = rs.getString("image");
 			float userRating = rs.getFloat("userRating");
 			
-			//  Luodaan ja palautetaan uusi henkilo
+			//luodaan uusi elokuva hettujen tietojen perusteella, ja palautetaan elokuva olio
 			return new Movie(id, title, desc, runtime, image, userRating);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+				}
 		}
-	}
 	
+	//metodi jota käytetään genrejen lukemiseen tietokanna vastauksista
 	private Genre readGenre(ResultSet rs) {
 		try {
+			//haetaan genren tiedot kenttä kerrallaan
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
 			
-			//System.out.println("Genre id: "+id+" ja genre nimi: "+name);
+			//palautetaan uusi genre haetuilla arvoilla
 			return new Genre(id, name);
-		}catch (SQLException e) {
-			throw new RuntimeException(e);
+			}catch (SQLException e) {
+				throw new RuntimeException(e);
+				}
 		}
-	}
 	
+	//metodia käytetään genren nimen etsimiseen
 	public String findGenreName(int id) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -183,26 +186,30 @@ public class MovieDAO extends DataAccessObject{
 		String genreName = null;
 
 		try {
+			//valmistellaan komento
 			String sqlSelect = "SELECT genre.name FROM genre "
 							+ "WHERE genre.id = ? ;";
+			
 			conn = getConnection();
-
 			stmt = conn.prepareStatement(sqlSelect);
 			stmt.setInt(1, id);
 			
+			//lähetetään komento
 			rs = stmt.executeQuery();
+			
+			//käydään vastaukset läpi readGenre metodilla
 			while(rs.next()) {
 				genreName = rs.getString("name");
-
-			}
-		}catch(SQLException e) {
-			throw new RuntimeException(e);
-			}finally {
-				close(rs, stmt, conn);
 				}
+			}catch(SQLException e) {
+				throw new RuntimeException(e);
+				}finally {
+					close(rs, stmt, conn);
+					}
 		return genreName;
-	}
+		}
 	
+	//metodi joka hakee listan elokuvia genren perusteella
 	public ArrayList<Movie> findAllByGenre(int id){
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -216,7 +223,7 @@ public class MovieDAO extends DataAccessObject{
 		try {
 			// Luodaan yhteys
 			conn = getConnection();
-			// Luodaan komento: haetaan kaikki rivit henkilo-taulusta
+			// Luodaan komento: haetaan kaikki rivit movie taulusta
 			String sqlSelect = "SELECT movie.id, movie.title, movie.description, movie.runtime, movie.image, movie.userRating " 
 								+"FROM movie, movie_genres, genre "
 								+"WHERE genre_id = ? "
@@ -225,13 +232,15 @@ public class MovieDAO extends DataAccessObject{
 			// Valmistellaan komento:
 			stmt = conn.prepareStatement(sqlSelect);
 			stmt.setInt(1, id);
-			// L�hetet��n komento:
-
+			
+			// Lähetetään komento
 			rs = stmt.executeQuery();
-			// K�yd��n tulostaulun rivit l�pi ja luetaan readHenkilo()-metodilla:
+			
+			// käydään läpi tulokset readMovie metodilla, ja jokaista elokuvaa kohden käydään läpi genret readGenre metodilla
 			while (rs.next()) {
 				movie = readMovie(rs);
 				
+				//luodaan komento
 				String sqlGenreSelect= "SELECT genre.id, genre.name "
 						+ "FROM genre, movie_genres, movie "
 						+ "WHERE movie.id = ? "
@@ -239,25 +248,26 @@ public class MovieDAO extends DataAccessObject{
 						+ "AND genre.id = movie_genres.genre_id "
 						+ "ORDER BY genre.id";
 				
+				//valmistellaan komento
 				stmtGenre = conn.prepareStatement(sqlGenreSelect);
-				stmtGenre.setInt(1, movie.getId());				
+				stmtGenre.setInt(1, movie.getId());
+				
+				//lähetetään komento
 				rsGenre = stmtGenre.executeQuery();
 				
+				//luodaan lista genrejä varten
 				ArrayList<Genre> genres = new ArrayList<>();
 				
+				//käydään genret läpi apumetodilla
 				while(rsGenre.next()) {
 					genre = readGenre(rsGenre);
-					
-					//System.out.println("Genre: "+genre.getName());
-					
+					//lisätään genre listaan
 					genres.add(genre);
 					}
+				//asetetaan genret elokuvalle
 				movie.setGenres(genres);
 				
-				System.out.println(movie.getGenres().get(0).getName());
-				
-				// lisätään genret elokuvaan ja elokuvat l
-				
+				//lisätään elokuva elokuvalistaan
 				movies.add(movie);
 				}
 			}catch(SQLException e) {
@@ -268,6 +278,7 @@ public class MovieDAO extends DataAccessObject{
 		return movies;
 		}
 	
+	//metodi etsimään elokuva id:n perusteella. Käytetään kansoittamaan UpdateServletin:n sivu:n formi
 	public Movie findMovieById(int id) {
 		ResultSet rs = null;
 		Connection conn = null;
@@ -277,28 +288,28 @@ public class MovieDAO extends DataAccessObject{
 			// Luodaan yhteys
 			conn = getConnection();
 			
-			// Luodaan lause joka hakee kaikki id:llä (ID rivi taulussa kaikilla uniikki, voi antaa vain yhden tuloksen
+			// Luodaan komento joka hakee kaikki tiedot id:llä
 			String sqlSelect = "SELECT id, title, description, runtime, image, userRating FROM movie WHERE id=?;";
 			
+			//valmistellaan komento
 			stmt = conn.prepareStatement(sqlSelect);
-			
-			System.out.println("Queryyn menevän elokuvan ID:"+id); //testi
-			
 			stmt.setInt(1, id);
 			
+			//lähetään komento
 			rs = stmt.executeQuery();
 			while(rs.next()) {
+				//luetaan elokuva tuloksista
 				movie = readMovie(rs);
-			}
-		}catch(SQLException e) {
-			throw new RuntimeException(e);
-		}finally {
-			close(rs, stmt, conn); // Suljetaan
-		}
-		
+				}
+			}catch(SQLException e) {
+				throw new RuntimeException(e);
+				}finally {
+					close(rs, stmt, conn); // Suljetaan
+					}
 		return movie;
-	}
+		}
 	
+	//etsitään viimeksi lisätyn elokuvan id
 	public int findLatestMovieId() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -307,77 +318,91 @@ public class MovieDAO extends DataAccessObject{
 		try {
 			// Luodaan yhteys
 			conn = getConnection();
+			
+			//luodaan komento
 			String sqlSelect = "SELECT MAX(id) FROM movie";
 			
+			//valmistellaan komento
 			stmt = conn.prepareStatement(sqlSelect);
 			
+			//lähetetään komento
 			rs = stmt.executeQuery();
 			
+			//käydään läpi tulokset
 			while(rs.next()) {				
 				id = rs.getInt(1);
-			}
-			
+				}
 			}catch(SQLException e) {
 				throw new RuntimeException(e);
-			}finally {
-				close(stmt, conn); // Suljetaan
-			}
-		
-			
-			return id;
+				}finally {
+					close(stmt, conn); // Suljetaan
+					}
+		return id;
 		}
 	
+	
+	//metodi jolla elokuvat lisätään tietokantaan !!! HUOM !!! elokuva pitää lisätä movie tauluun ja elokuvan genret merkata movie_nenres tauluun
 	public void addNew(Movie movie) {
 		Connection connection = null;
 		PreparedStatement stmtInsert = null;
 		
 		try {
+		//luodaan yhteys
 		connection = getConnection();
 		
+		//luodaan komento
 		String sqlInsert = "INSERT INTO movie(title, description, runtime, image, userRating) VALUES (?,?,?,?,?)";
+		
+		//valmistellaan komento
 		stmtInsert = connection.prepareStatement(sqlInsert);
 		stmtInsert.setString(1, movie.getTitle());
 		stmtInsert.setString(2, movie.getDescription());
 		stmtInsert.setString(3, movie.getRuntime());
 		stmtInsert.setString(4, movie.getImage());
 		stmtInsert.setFloat(5, movie.getUserRating());
+		
+		//ajetaan komento
 		stmtInsert.executeUpdate();
 		
+		//putsataan stmtInsert uutta käyttöä varten
 		stmtInsert = null;
 		
+		//etsitään viimeksi lisätyn elokuvan id
 		int id = findLatestMovieId();
 		
+		//etsitään elokuvan genret genreList bool arrayn avulla
 		boolean[] boolList = movie.getGenreList();
 		
+		//tarkistetaan että kaikki eivät olleet falseja(ei genreä)
 		boolean allFalse = allFalse(boolList);
 		
-		System.out.println("allFalse :"+allFalse);
-		
 		if(allFalse) {
-			
+			//jos mitään genreä ei valittu, asetetaan tällä lauseella elokuvan genreksi "noGenre"
 			String genresInsert = "INSERT INTO movie_genres(movie_id,genre_id) VALUES ("+id+",10)";
 			stmtInsert = connection.prepareStatement(genresInsert);
 			stmtInsert.executeUpdate();			
 		}
 		else {
+			//luodaan komento
 			String genresInsert = "INSERT INTO movie_genres(movie_id,genre_id) VALUES ";
 			
-		
+			//käydään läpi genreLista, katsotaan kuinka monta lisä arvoa komento tarvii
 			for(int i=0; i<boolList.length;i++) {				
 				if(boolList[i]) {
 					int add = i+1;
 					genresInsert = genresInsert + "("+id+","+add+"),";
-					System.out.println(genresInsert);
-					System.out.println(boolList[i]);
 				}
 				
 			}
 		
-
+			//pätkäistään ylimääräinen pilkku komennon perästä
 			genresInsert = genresInsert.substring(0, genresInsert.length()-1);
 
-			System.out.println("Final genreInsert"+genresInsert);
+			
+			//valmistellaan komento
 			stmtInsert = connection.prepareStatement(genresInsert);
+			
+			//ajetaan komento
 			stmtInsert.executeUpdate();
 		}	
 		
@@ -388,59 +413,62 @@ public class MovieDAO extends DataAccessObject{
 		}
 	}
 	
+	//elokuvien poisto metodi
 	public void deleteMovie(Movie movie) {
 		Connection connection = null;
 		PreparedStatement stmtInsert = null;
 		String movieID = Integer.toString(movie.getId());
 		
 		try {
-		connection = getConnection();
-		String sqlDelete = "DELETE m, mg FROM movie m JOIN movie_genres mg ON m.id = mg.movie_id WHERE m.id = ?";
-		stmtInsert = connection.prepareStatement(sqlDelete);
-		stmtInsert.setString(1, movieID);
-		System.out.println("movie id : "+movieID);
-		stmtInsert.executeUpdate();
-		
-		}catch(SQLException e) {
-			throw new RuntimeException(e);
-		}finally {
-			close(stmtInsert, connection);
+			//luodaan yhteys
+			connection = getConnection();
+			
+			//luodaan komento
+			String sqlDelete = "DELETE m, mg FROM movie m JOIN movie_genres mg ON m.id = mg.movie_id WHERE m.id = ?";
+			
+			//valmistellaan komento
+			stmtInsert = connection.prepareStatement(sqlDelete);//ajetaan komento
+			stmtInsert.setString(1, movieID);
+			
+			//ajetaan komento
+			stmtInsert.executeUpdate();
+			}catch(SQLException e) {
+				throw new RuntimeException(e);
+				}finally {
+					close(stmtInsert, connection);
+					}
 		}
-	}
-	
+	 
+	//elokuvan päivitysmetodi
 	public void updateMovie(Movie movieBefore, Movie updatedMovie) {
 		Connection connection = null;
 		PreparedStatement stmtInsert = null;
-		
-	
+			
 		try {
+			//luodaan yhteys
 			connection = getConnection();
 			
+			//luodaan komento
 			String sqlUpdate = "UPDATE movie "
 							+"SET title=?, description=?, runtime=?, image=?, userRating=? "
 							+"WHERE id=?";
+			
+			//valmistellaan komento
 			stmtInsert = connection.prepareStatement(sqlUpdate);
 			stmtInsert.setString(1, updatedMovie.getTitle());
 			stmtInsert.setString(2, updatedMovie.getDescription());
 			stmtInsert.setString(3, updatedMovie.getRuntime());
 			stmtInsert.setString(4, updatedMovie.getImage());
 			stmtInsert.setFloat(5, updatedMovie.getUserRating());
-			
 			stmtInsert.setInt(6, movieBefore.getId());
 			
-			System.out.println("Elokuva jota päivitetään:"+movieBefore.getId()+" Vanhat runtime: "+movieBefore.getRuntime()+" Uusi runtime: "+updatedMovie.getRuntime()); //testi
-
-			
+			//ajetaan komento
 			stmtInsert.executeUpdate();
-			
-
-					
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-			finally {
-				close(stmtInsert, connection);
-			
+			}catch(SQLException e){
+				throw new RuntimeException(e);
+				}
+		finally {
+			close(stmtInsert, connection);
+			}
 		}
 	}
-}

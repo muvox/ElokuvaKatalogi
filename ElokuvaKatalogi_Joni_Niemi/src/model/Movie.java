@@ -6,23 +6,21 @@ import java.util.List;
 public class Movie {
 	
 	
-	int id;				//yksil�iv� id
+	int id;					//yksilöivä id
 	
-	String title;	//elokuvan nimi, alkuper�isell� kielella
+	String title;			//elokuvan nimi, alkuper�isell� kielella
 	
-	//TODO String movieNameTranslated **Elokuvan nimi kielell� jolla k�ytt�j�n maassa n�ytetty
+	String description;		//lyhyt kuvaus elokuvasta
 	
-	String description;	//lyhyt kuvaus elokuvasta
-	
-	boolean[] genreList;//lista genreist�
+	boolean[] genreList;	//lista genreistä jota käytetään elokuvaa luodessa
 
-	String runtime;		// elokuvan kesto
+	String runtime;			// elokuvan kesto
 	
 	String image;			//url elokuvan kuvasta
 	
-	float userRating;			//floattinga k�ytt�jien arvosana 
+	float userRating;		//floattinga  käyttäjän arvosana 
 	
-	ArrayList<Genre> genres;
+	ArrayList<Genre> genres;//lista genreistä
 	
 	public ArrayList<Genre> getGenres() {
 		return genres;

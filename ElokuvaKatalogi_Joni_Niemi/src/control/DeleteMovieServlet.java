@@ -23,22 +23,25 @@ public class DeleteMovieServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//luodaan movieDAO
 		MovieDAO modo = new MovieDAO();
-		String stringID = (String)request.getParameter("movieid");
 		
-		System.out.println("Movie to be deleted: "+stringID);
+		//otetaan sivulta elokuva id stringiksi ja käännetään se int arvoksi
+		String stringID = (String)request.getParameter("movieid");		
 		int movieID = Integer.parseInt(stringID);
 		
+		//luodaan elokuva olio ja etsitään elokuvan olio id:llä
 		Movie movie = modo.findMovieById(movieID);
 		
-		try {
-		System.out.println("Deleting movie: "+movie.getTitle()+" With ID: "+movie.getId());
+		//lähetetään poistamispyyntö movieDAO:lle
+		try {System.out.println("Deleting movie: "+movie.getTitle()+" With ID: "+movie.getId());
 		modo.deleteMovie(movie);
+		
 		}catch(Exception e){
 			System.out.println("Error occurred!!!");
 		}
 		
-		
+		//ohjataan takaisin elokuva listaan
 		RequestDispatcher rd = request.getRequestDispatcher("listMovies");
 		rd.forward(request,response);
 	}

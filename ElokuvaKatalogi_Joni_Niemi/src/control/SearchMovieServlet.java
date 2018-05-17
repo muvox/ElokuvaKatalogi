@@ -24,18 +24,23 @@ public class SearchMovieServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//otetaan vastaan hakusana stringinä
 		String searchString = request.getParameter("search");
 		
+		//luodaan movieDAO
 		MovieDAO moDAO = new MovieDAO();
 		
+		//haetaan movieDAO:lta lista elokuvista hakusanan perusteella
 		ArrayList<Movie> movies = moDAO.searchMovieByTitle(searchString);	
 		
+		//asetetaan elokuvalista sivulle
 		request.setAttribute("movies", movies);
 		
-		String headerText = "Showing movies with search word: "+searchString;
-		
+		//luodaan otsikko stringi sivua varten. Kertoo millä hakusanalla haettu. Asetetaan sivulle
+		String headerText = "Showing movies with search word: "+searchString;		
 		request.setAttribute("headerText", headerText);
-
+		
+		//Avataan sivu
 		String jsp = "/view/movieList.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);
