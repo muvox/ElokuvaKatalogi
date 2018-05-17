@@ -48,5 +48,10 @@ Movie List
 
 </div>
 <p style="color:white;"> By Joni Niemi</p>
+<br>
+<p> Tässä sovelluksessa voit tallentaa elokuvia tietokantaan. Lisättyäsi elokuvan, voit selata elokuviasia genren perusteella.</p>
+<p> Sovelluksessa on myös "Update" toiminto, jossa voit päivittää elokuvan tietoja</p>
+<p> Toiminnassa haku toiminto jonka avulla voit etsiä elokuvan nimen perusteella tietokannasta elokuvia </p>
+<p> Seka delete nappi </p>
 </body>
 </html>
