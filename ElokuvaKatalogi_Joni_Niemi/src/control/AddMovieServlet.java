@@ -26,6 +26,8 @@ public class AddMovieServlet extends HttpServlet {
    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("error", "0");
+		
 		String jsp = "/view/movieform.jsp";
 		RequestDispatcher dispatcher  = getServletContext().getRequestDispatcher(jsp);
 		dispatcher.forward(request, response);	
@@ -34,6 +36,8 @@ public class AddMovieServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doGet(request, response);
+		
+		try {
 		boolean dump;
 		
 		String title = request.getParameter("title");
@@ -161,6 +165,12 @@ public class AddMovieServlet extends HttpServlet {
 		modo.addNew(movie);
 		
 		response.sendRedirect("listMovies");
+		
+		}catch(Exception e) {
+			request.setAttribute("error", "true");
+			RequestDispatcher rd = request.getRequestDispatcher("addErrorCheck");
+			rd.forward(request,response);			
+		}
 	}
 
 }

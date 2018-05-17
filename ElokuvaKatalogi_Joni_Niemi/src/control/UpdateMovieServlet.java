@@ -35,7 +35,7 @@ public class UpdateMovieServlet extends HttpServlet {
 		
 		String errorString = (String)request.getParameter("error");
 		System.out.println("Error stringin tulos: "+errorString);
-		//TODO: WIP
+		
 		request.setAttribute("movie", movie);
 		request.setAttribute("error", "0");
 		

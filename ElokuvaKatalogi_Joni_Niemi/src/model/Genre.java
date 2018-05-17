@@ -22,7 +22,7 @@ public class Genre {
 		this.id = id;
 	}
 
-	public Genre( int Id, String name) {
+	public Genre( int id, String name) {
 		super();
 		this.name = name;
 		this.id = id;

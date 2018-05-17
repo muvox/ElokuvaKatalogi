@@ -6,24 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update movie information</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="formStyle.css">
 
 </head>
 <body>
-	<div class="toast jam" style="
-								opacity: ${error};
-								float:right;
-  								background-color: #99004d;
-  								color: #fff;
-  								line-height: 1.5;
-  								margin-bottom: 1em;
-  								padding: 1.25em;
-  								top: 1em;
-  								transition: 0.15s ease-in-out;
-  								width: 325px;">
-  		<span class="close" aria-role="button" tabindex="0"></span>
-  		Lightly toasted with jam.
-	</div>
+<div class="superContainer">
+<div class="container">
+	
 	<h1>Update movie information</h1>
 		<form method="post">
 			<table>
@@ -68,6 +57,28 @@
 			<br>
 			<h2>Current Image</h2>
 			<br>
-			<div style="background: url(${movie.image}) "></div>
+			<div style="background: url(${movie.image})"></div>
+			</div>
+			<div class="container">
+			<div class="toast jam" style="
+								opacity: ${error};
+  								background-color: #99004d;
+  								color: #fff;
+  								line-height: 1.5;
+  								margin-bottom: 1em;
+  								padding: 1.25em;
+  								top: 1em;
+  								width: 325px;">
+  			<span class="close" ></span>
+  			<H3>An error has occurred!</H3>
+  			<p> Please make sure you filled every box correctly!</p>
+  			<p> Title and can be almost anything, limited to 250 characters </p>
+  			<p> Runtime is handled as a string for now, so it can basically be anything</p>
+  			<p> User rating should be entered as a number ranging from 0.01 to 5</p>
+  			<p> Please choose atleast one genre</p>
+  			<p> Image should be a direct link to a image file (.jpg .png etc.)</p>
+			</div>
+			</div>
+			</div>
 </body>
 </html>

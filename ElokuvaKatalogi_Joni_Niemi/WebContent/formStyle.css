@@ -82,27 +82,30 @@ header {
   display:flex;
   flex-direction: column;
   position: relative;
-  width: 500px;
+
   margin: 50px auto 100px auto;
 }
 
 input {
   font-size: 0.875em;
-  width: 470px;
+  width: 30em;
+
   height: 50px;
-  padding: 0px 15px 0px 15px;
+  padding:0;
   
   background: transparent;
   outline: none;
   color: white;
   
-  border: solid 1px #26282d;
-  border-bottom: 0;
-  
+  border: solid 1px #26282d;  
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
+}
+
+td{
+	padding:0;
 }
 
 input:hover {
@@ -110,9 +113,9 @@ input:hover {
 }
 
 #submit {
-  width: 502px;
+
   
-  padding: 0;
+  padding-left: 0.5em;
   margin: 0px 0px 0px 0px;
 
   font-size: 0.875em;
@@ -122,6 +125,68 @@ input:hover {
   cursor: pointer;
   
   border: solid 1px #26282d;
-  border-top: solid 1px #26282d;
+  
+}
+
+.genreCheck {
+	width: auto;
+}
+
+.container{
+	width: 40em;
+	padding-bottom: 1.5em;
+}
+
+.button{
+	height: 48px;
+	border: solid 1px #26282d;
+	text-align: center;
+	color: white;
+	line-height:48px;
+	
+}
+
+.button:hover{
+	transition: all 0.3s ease-in-out;
+	background: #26282d;
+}
+
+.button a{
+	padding-top: 10px;
+	text-decoration: none;
+}
+
+.genreBox{
+
+	text-align: center;
+
+}
+
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+/* selected link */
+a:active {
+    color: white;
+}
+
+.superContainer{
+	
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
